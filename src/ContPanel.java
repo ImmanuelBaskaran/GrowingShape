@@ -46,7 +46,6 @@ public class ContPanel extends JPanel implements KeyListener{
 
 
             int key = e.getKeyCode();
-            System.out.println(e.getKeyCode());
             if (key == KeyEvent.VK_LEFT) {
                 problem--;
                 if(problem<0){
@@ -63,6 +62,20 @@ public class ContPanel extends JPanel implements KeyListener{
                 }
                 shapes = problems.get(problem);
                 repaint();
+            }
+            if (key == KeyEvent.VK_A){
+                System.out.println(shapes.get(0).findArea());
+            }
+            if (key == KeyEvent.VK_A){
+                for(int i=0;i<shapes.size();i++){
+                    for(int j=0;j<shapes.size();j++){
+                        if(shapes.get(i).intersects(shapes.get(j))){
+                            if(i==j){
+                                System.out.println("Colision");
+                            }
+                        }
+                    }
+                }
             }
 
 

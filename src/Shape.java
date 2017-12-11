@@ -30,8 +30,8 @@ public class Shape {
     public void draw(Graphics g){
 
         for(int i = 0;i<points.size();i+=1){
-            g.drawLine(x+(int)points.get(i%numPoints).getX()*10,y+(int)points.get(i%numPoints).getY()*10,
-                    x+(int)points.get((i+1)%numPoints).getX()*10,y+(int)points.get((i+1)%numPoints).getY()*10);
+            g.drawLine((int)(x+points.get(i%numPoints).getX()*10),(int)(y+points.get(i%numPoints).getY()*10),
+                    (int)(x+points.get((i+1)%numPoints).getX()*10),(int)(y+points.get((i+1)%numPoints).getY()*10));
         }
 
 //        for(Point2D point:points){

@@ -22,6 +22,8 @@ public class Shape {
 
     public Path2D.Double polygon;
 
+    int scale = 10;
+
     double x;
     double y;
     int numPoints;
@@ -38,14 +40,15 @@ public class Shape {
     private void recalculatePolygon(){
         polygon = new Path2D.Double();
         lines.clear();
-        polygon.moveTo(x+points.get(0).getX()*10,y+points.get(0).getY()*10);
+
+        polygon.moveTo(x+points.get(0).getX()* scale,y+points.get(0).getY()* scale);
         for(int i = 1;i<numPoints;i++){
-            polygon.lineTo(x+points.get(i).getX()*10,y+points.get(i).getY()*10);
-            lines.add(new Line2D.Double(new Point2D.Double(x+points.get(i-1).getX()*10,y+points.get(i-1).getY()*10),
-                    new Point2D.Double(x+points.get(i).getX()*10,y+points.get(i).getY()*10)));
+            polygon.lineTo(x+points.get(i).getX()* scale,y+points.get(i).getY()* scale);
+            lines.add(new Line2D.Double(new Point2D.Double(x+points.get(i-1).getX()* scale,y+points.get(i-1).getY()* scale),
+                    new Point2D.Double(x+points.get(i).getX()* scale,y+points.get(i).getY()* scale)));
         }
-        lines.add(new Line2D.Double(new Point2D.Double(x+points.get(numPoints-1).getX()*10,y+points.get(numPoints-1).getY()*10),
-                  new Point2D.Double(x+points.get(0).getX()*10,y+points.get(0).getY()*10)));
+        lines.add(new Line2D.Double(new Point2D.Double(x+points.get(numPoints-1).getX()* scale,y+points.get(numPoints-1).getY()* scale),
+                  new Point2D.Double(x+points.get(0).getX()* scale,y+points.get(0).getY()* scale)));
         polygon.closePath();
     }
     public void setX(double x){
@@ -77,7 +80,7 @@ public class Shape {
 
     public boolean contains(Shape shape){
         for(Point2D point:shape.points){
-            if(!polygon.contains(shape.x+point.getX()*10,shape.y+point.getY()*10)){
+            if(!polygon.contains(shape.x+point.getX()*scale,shape.y+point.getY()*scale)){
                 return false;
             }
         }
@@ -95,6 +98,9 @@ public class Shape {
 
     public boolean intersects(Shape s){
 
+        if(s.contains(this)){
+            return false;
+        }
         for(Line2D line:lines){
             for(Line2D line1:s.lines){
                 if(line.intersectsLine(line1)){

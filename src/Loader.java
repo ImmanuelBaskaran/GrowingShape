@@ -14,12 +14,13 @@ public class Loader {
     public static  List< List<Shape>> loadfile(){
         List< List<Shape>> problems = new ArrayList<>();
 
-        int x = 0,y = 0;
+        int x = 0,y = 0,i2 = 0;
         try {
             Scanner scanner = new Scanner(new File("problems.rfp"));
             while (scanner.hasNextLine()) {
                 x=0;
                 y=0;
+                i2=0;
                 List<Shape> shapes = new ArrayList<>();
                 String line = scanner.nextLine();
                 for(String shape:line.split("#")) {
@@ -35,9 +36,14 @@ public class Loader {
                             Point2D p = new Point2D.Double(Double.parseDouble(tpoints[i]),Double.parseDouble(tpoints[i + 1]));
                             points.add(p);
                         }
-                        shapes.add(new Shape(100+x*50, 50+y*160, points));
+                        if(i2==0){
+                            shapes.add(new Shape(800, 800, points));
+                        }else {
+                            shapes.add(new Shape(100 + x * 50, 50 + y * 160, points));
+                        }
                         x++;
-                        if(x*40>1400){
+                        i2++;
+                        if(100+x*40>1000){
                             y++;
                             x=0;
                         }

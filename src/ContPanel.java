@@ -14,6 +14,8 @@ public class ContPanel extends JPanel implements KeyListener{
     List< List<Shape>> problems;
     List<Shape> shapes;
 
+    List<Shape> used;
+
     int problem;
 
 
@@ -23,18 +25,29 @@ public class ContPanel extends JPanel implements KeyListener{
         this.addKeyListener(this);
         this.setFocusable(true);
         this.requestFocus();
-        for(List<Shape> problem:problems){
-            Shape shape = problem.get(1);
-            shape.setX(problem.get(0).x);
-            shape.setY(problem.get(0).y);
-            shape.translate(new Point2D.Double(0.1,0.1));
-            if(shape.intersects(problem.get(0))){
-                System.out.println("Error with:" + problems.indexOf(problem));
-                shape.setX(0);
-                shape.setY(0);
-            }else if(problem.get(0).contains(shape)){
-                System.out.println("Success with:" + problems.indexOf(problem));
+        for(List<Shape> problem:problems) {
+            for (int i = 1; i < problem.size(); i++) {
+                Shape shape = problem.get(i);
+                Point2D temp = new Point2D.Double(shape.x,shape.y);
+                shape.setX(problem.get(0).x);
+                shape.setY(problem.get(0).y);
+                //     shape.translate(new Point2D.Double(0.1,0.1));
+                if (shape.intersects(problem.get(0))) {
+                    //   System.out.println("Error with:" + problems.indexOf(problem));
+                    shape.setX(temp.getX());
+                    shape.setY(temp.getY());
+                } else if (problem.get(0).contains(shape)) {
+                    if ((shape.findArea() / problem.get(0).findArea()) > 0.15) {
+                        System.out.println("Success with:" + problems.indexOf(problem));
+                        System.out.println(i);
+                        break;
+                    } else {
+                        System.out.println("Filling Room:" + problems.indexOf(problem) + ":" + shape.findArea() / problem.get(0).findArea());
+                        shape.setX(temp.getX());
+                        shape.setY(temp.getY());
+                    }
 
+                }
             }
         }
         System.out.print("");
@@ -49,6 +62,7 @@ public class ContPanel extends JPanel implements KeyListener{
             shape.draw(g);
         }
     }
+
 
     @Override
     public void keyTyped(KeyEvent e) {

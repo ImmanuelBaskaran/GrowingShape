@@ -23,6 +23,16 @@ public class ContPanel extends JPanel implements KeyListener{
         this.addKeyListener(this);
         this.setFocusable(true);
         this.requestFocus();
+        for(List<Shape> problem:problems){
+            Shape shape = problem.get(1);
+            shape.setX(problem.get(0).x+1);
+            shape.setY(problem.get(0).y+1);
+            if(shape.intersects(problem.get(0))){
+                System.out.println("Error with:" + problems.indexOf(problem));
+                shape.setX(0);
+                shape.setY(0);
+            }
+        }
         System.out.print("");
     }
 
@@ -70,7 +80,7 @@ public class ContPanel extends JPanel implements KeyListener{
                 for(int i=0;i<shapes.size();i++){
                     for(int j=0;j<shapes.size();j++){
                         if(shapes.get(i).intersects(shapes.get(j))){
-                            if(i==j){
+                            if(i!=j){
                                 System.out.println("Colision");
                             }
                         }

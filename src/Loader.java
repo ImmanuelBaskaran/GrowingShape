@@ -37,7 +37,7 @@ public class Loader {
                         }
                         shapes.add(new Shape(100+x*50, 50+y*160, points));
                         x++;
-                        if(x*40>800){
+                        if(x*40>1400){
                             y++;
                             x=0;
                         }

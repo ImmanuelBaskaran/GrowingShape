@@ -25,8 +25,9 @@ public class ContPanel extends JPanel implements KeyListener{
         this.requestFocus();
         for(List<Shape> problem:problems){
             Shape shape = problem.get(1);
-            shape.setX(problem.get(0).x+1);
-            shape.setY(problem.get(0).y+1);
+            shape.setX(problem.get(0).x);
+            shape.setY(problem.get(0).y);
+            shape.translate(new Point2D.Double(0.1,0.1));
             if(shape.intersects(problem.get(0))){
                 System.out.println("Error with:" + problems.indexOf(problem));
                 shape.setX(0);

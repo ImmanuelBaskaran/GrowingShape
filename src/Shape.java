@@ -38,7 +38,7 @@ public class Shape {
     private void recalculatePolygon(){
         polygon = new Path2D.Double();
         lines.clear();
-        polygon.moveTo(x,y);
+        polygon.moveTo(x+points.get(0).getX()*10,y+points.get(0).getY()*10);
         for(int i = 1;i<numPoints;i++){
             polygon.lineTo(x+points.get(i).getX()*10,y+points.get(i).getY()*10);
             lines.add(new Line2D.Double(new Point2D.Double(x+points.get(i-1).getX()*10,y+points.get(i-1).getY()*10),
@@ -82,6 +82,15 @@ public class Shape {
             }
         }
         return true;
+    }
+
+    public void translate(Point2D delta){
+
+        for(Point2D point:points){
+            point.setLocation(point.getX()+delta.getX(),point.getY()+delta.getY());
+        }
+
+        recalculatePolygon();
     }
 
     public boolean intersects(Shape s){

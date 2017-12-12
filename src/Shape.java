@@ -41,7 +41,7 @@ public class Shape {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.draw(polygon);
         g2d.dispose();
-        
+
     }
     public double findArea(){
         double sum = 0;
@@ -53,7 +53,20 @@ public class Shape {
         return sum/2;
     }
 
+    public boolean contains(Shape s){
+        for(Point2D p:s.points){
+            if(!polygon.contains(p.getX(),p.getY())){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean intersects(Shape s){
+
+        if(contains(s)){
+            return false;
+        }
 
         for(Point2D p:s.points){
             if(polygon.contains(p.getX(),p.getY())){

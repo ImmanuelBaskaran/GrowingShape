@@ -75,12 +75,16 @@ public class Shape {
         return sum/2;
     }
 
+    public boolean contains(Shape shape){
+        for(Point2D point:shape.points){
+            if(!polygon.contains(shape.x+point.getX()*10,shape.y+point.getY()*10)){
+                return false;
+            }
+        }
+        return true;
+    }
 
     public boolean intersects(Shape s){
-
-
-
-
 
         for(Line2D line:lines){
             for(Line2D line1:s.lines){

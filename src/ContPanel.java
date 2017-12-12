@@ -31,6 +31,9 @@ public class ContPanel extends JPanel implements KeyListener{
                 System.out.println("Error with:" + problems.indexOf(problem));
                 shape.setX(0);
                 shape.setY(0);
+            }else if(problem.get(0).contains(shape)){
+                System.out.println("Success with:" + problems.indexOf(problem));
+
             }
         }
         System.out.print("");

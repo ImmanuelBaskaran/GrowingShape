@@ -1,3 +1,5 @@
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -116,7 +118,7 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
                 used.clear();
                 test = 0;
                 attemtps = 0;
-                while (test / problem.get(0).findArea() < 0.3) {
+                while (test / problem.get(0).findArea() < 0.30) {
                     current.removeAll(used);
                     for (int i = 1; i < current.size(); i++) {
                         Shape shape = current.get(i);
@@ -127,13 +129,14 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
                                 (new Random().nextDouble() * problem.get(0).polygon.getBounds().height) / 10));
 
 
-                        shape.rotateAround(180 * new Random().nextDouble());
+                        shape.rotateAround(360 * new Random().nextDouble());
 
 
                         if (shape.intersects(problem.get(0))) {
                             //   System.out.println("Error with:" + problems.indexOf(problem));
                             shape.reset();
                         } else if (problem.get(0).contains(shape)) {
+
                             used.add(shape);
                         } else {
                             shape.reset();
@@ -148,16 +151,16 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
                                         if (used.get(i0).findArea() > used.get(j0).findArea()) {
                                             used.get(j0).valid = false;
                                         } else {
-                                            used.get(i0).valid = false;
+                                            used.get(j0).valid = false;
                                         }
                                     }
                                 }
                                 if (used.get(i0).contains(used.get(j0))) {
                                     if (used.get(i0).valid && used.get(j0).valid) {
                                         if (used.get(i0).findArea() > used.get(j0).findArea()) {
-                                            used.get(j0).valid = false;
+                                          used.get(j0).valid = false;
                                         } else {
-                                            used.get(i0).valid = false;
+                                            used.get(j0).valid = false;
                                         }
                                     }
                                 }
@@ -171,7 +174,7 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
                         }
                     }
 
-                    if (test / problem.get(0).findArea() > 0.3) {
+                    if (test / problem.get(0).findArea() > 0.30) {
                         System.out.println("Yay:" + problems.indexOf(problem));
                         List<Shape> solution = new ArrayList<>();
 
@@ -207,6 +210,8 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
                     }
                     attemtps++;
                     if (attemtps > 70000) {
+                        System.out.println(problems.indexOf(problem));
+                        System.out.println(test / problem.get(0).findArea());
                         break;
                     }
                 }

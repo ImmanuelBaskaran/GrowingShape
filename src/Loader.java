@@ -30,10 +30,10 @@ public class Loader {
                         shape2 = shape2.replace(")", "");
                         shape2 = shape2.replace(" ", "");
                         shape2 = shape2.replace(";", "");
-                        List<Point2D> points = new ArrayList<>();
+                        List<Point2D.Double> points = new ArrayList<>();
                         String[] tpoints = shape2.split(",");
                         for (int i = 0; i < tpoints.length; i += 2) {
-                            Point2D p = new Point2D.Double(Double.parseDouble(tpoints[i]),Double.parseDouble(tpoints[i + 1]));
+                            Point2D.Double p = new Point2D.Double(Double.parseDouble(tpoints[i]),Double.parseDouble(tpoints[i + 1]));
                             points.add(p);
                         }
                         if(i2==0){

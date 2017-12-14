@@ -78,7 +78,7 @@ public class Shape {
 
 
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.draw(polygon);
+        g2d.fill(polygon);
         g2d.dispose();
 
     }

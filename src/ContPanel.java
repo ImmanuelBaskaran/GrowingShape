@@ -28,6 +28,9 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
 
     int attemtps = 0;
 
+    Point world = new Point(0,0);
+
+    double scalar = 1;
 
     public ContPanel(){
        Thread t = new Thread(this);
@@ -38,16 +41,37 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
     public void paint(Graphics g) {
         g.setColor(Color.gray);
         g.fillRect(0   ,0 ,1800,1800);
-        g.setColor(Color.CYAN);
-        for(Shape shape:shapes){
-                if(shape.valid){
-                    g.setColor(Color.BLACK);
-                }else{
-                    g.setColor(Color.CYAN);
-                }
-                shape.draw(g);
+        g.translate(world.x,world.y);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.scale(scalar,scalar);
 
+
+
+//        for(Shape shape:shapes){
+//                if(shape.valid){
+//                    g.setColor(Color.BLACK);
+//                }else{
+//                    g.setColor(Color.CYAN);
+//                }
+//                shape.draw(g);
+//
+//        }
+
+
+        g.setColor(Color.black);
+        List<Shape> d = problems.get(problem);
+        d.removeAll(solutions.get(problem));
+        for(Shape unused:d){
+            unused.draw(g);
         }
+
+        g.setColor(Color.green);
+        problems.get(problem).get(0).draw(g);
+        g.setColor(Color.CYAN);
+        for(Shape s:solutions.get(problem)){
+            s.draw(g);
+        }
+
     }
 
 
@@ -78,21 +102,34 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
                 shapes = problems.get(problem);
                 repaint();
             }
-            if (key == KeyEvent.VK_A){
-                System.out.println(shapes.get(0).findArea());
-            }
-            if (key == KeyEvent.VK_A){
-                for(int i=0;i<shapes.size();i++){
-                    for(int j=0;j<shapes.size();j++){
-                        if(shapes.get(i).intersects(shapes.get(j))){
-                            if(i!=j){
-                                System.out.println("Colision");
-                            }
-                        }
-                    }
-                }
-            }
 
+            if(key == KeyEvent.VK_A){
+                world.x+=5;
+                repaint();
+            }
+            if(key == KeyEvent.VK_D){
+                world.x-=5;
+                repaint();
+            }
+            if(key == KeyEvent.VK_S){
+                world.y+=5;
+                repaint();
+            }
+            if(key == KeyEvent.VK_W){
+                world.y-=5;
+                repaint();
+            }
+        if(key == KeyEvent.VK_Q){
+                if(scalar<=0){
+                    scalar=1;
+                }
+            scalar-=0.01;
+            repaint();
+        }
+        if(key == KeyEvent.VK_E){
+            scalar+=0.01;
+            repaint();
+        }
 
     }
 
@@ -210,9 +247,18 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
                         delim = delim.replaceAll(",;", ";");
                         delim = delim.substring(0, delim.length() - 1);
                         writert.println(delim);
+                        for (Shape shape1 : used) {
+                            if (shape1.valid) {
+                                shape1.translate(new Point2D.Double(+(problem.get(0).x - problem.get(0).polygon.getBounds().x) / 10, +(problem.get(0).y - problem.get(0).polygon.getBounds().y) / 10));
+                                solution.add(shape1);
+                            }else{
+                                shape1.reset();
+                            }
+                        }
                         break;
                     } else {
                         List<Shape> reseter = new ArrayList<>();
+                        List<Shape> solution = new ArrayList<>();
                         for (Shape ss : used) {
                             if (!ss.valid) {
                                 ss.valid = true;
@@ -224,6 +270,16 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
                     }
                     attemtps++;
                     if (attemtps > 90000) {
+                        List<Shape> incomplete = new ArrayList<>();
+                        for (Shape shape1 : used) {
+                            if (shape1.valid) {
+                            //    shape1.translate(new Point2D.Double(+(problem.get(0).x - problem.get(0).polygon.getBounds().x) / 10, +(problem.get(0).y - problem.get(0).polygon.getBounds().y) / 10));
+                                incomplete.add(shape1);
+                            }else{
+                                shape1.reset();
+                            }
+                        }
+                        solutions.add(incomplete);
                         System.out.println(problems.indexOf(problem));
                         System.out.println(test / problem.get(0).findArea());
                         break;

@@ -24,6 +24,9 @@ public class Loader {
                 List<Shape> shapes = new ArrayList<>();
                 String line = scanner.nextLine();
                 for(String shape:line.split("#")) {
+                    for(int b = 0;b<shape.split(":").length;b++){
+                        System.out.println(shape.split(":")[b].substring(shape.split(":")[b].length()-2));
+                    }
                     for(int v = 1;v<shape.split(":").length;v+=2) {
                         String shape2 = shape.split("\\d*:")[v];
                         shape2 = shape2.replace("(", "");

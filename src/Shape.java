@@ -109,6 +109,7 @@ public class Shape {
         recalculatePolygon();
     }
 
+
     public boolean intersects(Shape s){
 
         for(Line2D line:lines){

@@ -118,10 +118,13 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
                 used.clear();
                 test = 0;
                 attemtps = 0;
+
                 while (test / problem.get(0).findArea() < 0.30) {
                     current.removeAll(used);
+                  //  current.sort();
                     for (int i = 1; i < current.size(); i++) {
                         Shape shape = current.get(i);
+                        int rattemtps = 0;
                         shape.setX(problem.get(0).polygon.getBounds().x);
                         shape.setY(problem.get(0).polygon.getBounds().y);
 
@@ -129,7 +132,18 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
                                 (new Random().nextDouble() * problem.get(0).polygon.getBounds().height) / 10));
 
 
-                        shape.rotateAround(360 * new Random().nextDouble());
+
+                        shape.rotateAround(360*new Random().nextDouble());
+
+
+
+//                        while(!shape.intersects(problem.get(0))){
+//                            shape.rotateAround(1);
+//                            rattemtps++;
+//                            if(rattemtps>360){
+//                                break;
+//                            }
+
 
 
                         if (shape.intersects(problem.get(0))) {
@@ -209,7 +223,7 @@ public class ContPanel extends JPanel implements KeyListener,Runnable{
                         used.removeAll(reseter);
                     }
                     attemtps++;
-                    if (attemtps > 70000) {
+                    if (attemtps > 90000) {
                         System.out.println(problems.indexOf(problem));
                         System.out.println(test / problem.get(0).findArea());
                         break;
